@@ -21,7 +21,7 @@ The app requires [Python](https://www.python.org/) 3.6 or later. You will also n
 ```
 git clone https://github.com/clovisphere/auto-reply-web.git && cd auto-reply-web
 ```
-The directory should like:
+The directory should look like:
 ```
 ├── MANIFEST.in
 ├── analyzer
