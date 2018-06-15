@@ -1,6 +1,8 @@
 # Analyzer
 Demo "auto-reply" app that uses [nltk](https://www.nltk.org/).
 
+![Analyzer - Home Page](img/home_page.png)
+
 #### What should the app do?
 
 - Process text
@@ -60,6 +62,8 @@ $ pip install virtualenvwrapper
 ```
 
 If you did things right, and all went well, you should be able to access the app on [http://127.0.0.1:5000](http://127.0.0.1:5000/).
+
+![How it looks on my terminal](img/terminal.png)
 
 :smiley::wink: enjoy:zzz::ok_hand:
 
