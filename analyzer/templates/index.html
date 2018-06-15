@@ -1,0 +1,87 @@
+{% extends "base.html" %} 
+{% block title %}{{ title }}{% endblock %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <form id="target" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="question" style="line-height:70%; font-size: .90em;">How can I help you today?</label>
+                    <textarea name="question" rows="5" id="question" placeholder="Write text to analyze here" class="form-control"></textarea>
+                    <div class="invalid-feedback">Please enter text to analyse</div>
+                </div>
+                <div class="form-group">
+                    <label for="file" style="line-height:79%; font-size: .70em;">You may also upload a .txt file</label>
+                    <input type="file" class="form-control-file" id ="file" name="file" accept=".txt">
+                </div>
+                <button type="submit" name="submit" class="btn btn-info btn-sm">Start Analysis</button>
+                <!-- add input file here -->
+            </form>
+            {% if reply %}
+            <br/>
+            <p><b>Auto-Reply</b>:&nbsp<span class="text-muted">{{ reply }}</span></p>
+            {% endif %}
+        <!-- bar chart -->
+        {% if items %}
+        <canvas id="myChart" width="500" height="300"></canvas>
+        <script>
+            // do not resize the chart canvas when its container does (keep at 600x400px)
+            Chart.defaults.global.responsive = true;
+            // define the chart data
+            var chartData = {
+                labels: [{% for item in items %}
+                    "{{item[0]}}",
+                    {% endfor %}],
+                datasets: [{
+                    label: 'Word Frequency Distribution',
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(189, 231, 220, 0.2)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [{% for item in items %}
+                        {{ item[1] }},
+                        {% endfor %}],
+                    spanGaps: false
+                }]
+            }
+            // get chart canvas
+            var ctx = document.getElementById("myChart").getContext("2d");
+            // create the chart using the chart canvas
+            var myChart = new Chart(ctx, { type: 'line',data: chartData,});
+        </script> 
+        {% endif %}
+        </div>
+        <div class="col-sm-6">
+            {% if items %}
+            <label for="question" style="line-height:70%; font-size: .90em">Word count without <i>"noise"</i> words</label>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width:50%">Token</th>
+                        <th style="width:50%">Occurences</th>
+                    </tr>
+                </thead>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

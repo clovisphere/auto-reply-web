@@ -1,0 +1,5 @@
+include analyzer/schema.sql
+graft analyzer/static
+graft analyzer/templates
+graft analyzer/upload
+global-exclude *.pyc
